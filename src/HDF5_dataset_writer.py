@@ -3,7 +3,7 @@ import os
 
 
 class HDF5DatasetWriter():
-    def __init__(self, image_dims, depth_map_dims, outputPath, bufSize=1000):
+    def __init__(self, image_dims, depth_map_dims, outputPath, bufSize=50):
         if os.path.exists(outputPath):
             raise ValueError("The supplied ‘outputPath‘ already "
                              "exists and cannot be overwritten. Manually delete "
