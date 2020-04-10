@@ -10,14 +10,10 @@ import json
 import csv
 import progressbar
 import numpy as np
-from HDF5_dataset_writer import HDF5DatasetWriter
+import random
 
 TRAIN_PATH = os.path.abspath('../datasets/data/nyu2_train.csv')
 TEST_PATH = os.path.abspath('../datasets/data/nyu2_test.csv')
-TRAIN_HDF5 = os.path.abspath('../datasets/data/hdf5/train.hdf5')
-VAL_HDF5 = os.path.abspath('../datasets/data/hdf5/val.hdf5')
-TEST_HDF5 = os.path.abspath('../datasets/data/hdf5/test.hdf5')
-DATASET_MEAN = os.path.abspath('../datasets/data/mean.json')
 IMG_SHAPE = (480, 640, 3)
 DEPTH_IMG_SHAPE = (240, 320, 1)
 MAX_DEPTH = 1000
@@ -73,29 +69,5 @@ def preprocess_depth_map(depth_map_path):
   return depth_map
 
 
-def build_dataset(datasets):
-  for (dtype, img_paths, depth_map_paths, output_path) in datasets:
-    print("[INFO] building {}...".format(output_path))
-    writer = HDF5DatasetWriter(image_dims=(len(img_paths), 480, 640, 3), depth_map_dims=(len(img_paths), 240, 320, 1), outputPath=output_path)
-    widgets = ["Building Dataset: ", progressbar.Percentage(), " ", progressbar.Bar(), " ", progressbar.ETA()]
-    pbar = progressbar.ProgressBar(maxval=len(img_paths), widgets=widgets).start()
-
-    for (i, (img_path, depth_map_path)) in enumerate(zip(img_paths, depth_map_paths)):
-      image = preprocess_image(img_path)
-      depth_map = preprocess_depth_map(depth_map_path)
-      writer.add([image], [depth_map])
-      pbar.update(i)
-    pbar.finish()
-    writer.close()
-
-
 if __name__ == '__main__':
   (x_train, y_train), (x_val, y_val), (x_test, y_test) = load_img_paths(TRAIN_PATH, TEST_PATH)
-
-  datasets = [
-    ('train', x_train, y_train, TRAIN_HDF5),
-    ('val', x_val, y_val, VAL_HDF5),
-    ('test', x_test, y_test, TEST_HDF5),
-  ]
-
-  build_dataset(datasets)
