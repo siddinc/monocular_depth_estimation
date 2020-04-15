@@ -1,56 +1,45 @@
-mapping_dict = {
-    'bathroom_0042_out': "bathroom",
-    "conference_room_0001_out": "conference_room",
-    "playroom_0003_out": "playroom",
-    "bedroom_0035_out": "bedroom",
-    "basement_0001a_out": "basement",
-    "kitchen_0041_out": "kitchen",
-    "office_kitchen_0001a_out": "office_kitchen",
-    "dining_room_0014_out": "dining_room",
-    "study_room_0004_out": "study_room",
-    "office_0018_out": "office",
-    "bathroom_0056_out": "bathroom",
-    "bedroom_0056b_out": "bedroom",
-    "excercise_room_0001_out": "excercise_room",
-    "bathroom_0030_out": "bathroom",
-    "living_room_0071_out": "living_room",
-    "furniture_store_0001a_out": "furniture_store",
-    "conference_room_0002_out": "conference_room",
-    "bedroom_0031_out": "bedroom",
-    "living_room_0032_out": "living_room",
-    "home_office_0007_out": "home_office",
-    "office_0009_out": "office",
-    "computer_lab_0002_out": "computer_lab",
-    "kitchen_0029b_out": "kitchen",
-    "indoor_balcony_0001_out": "indoor_balcony",
-    "home_storage_0001_out": "home_storage",
-    "student_lounge_0001_out": "student_lounge",
-    "study_0004_out": "study",
-    "dinette_0001_out": "dinette",
-    "printer_room_0001_out": "printer_room",
-    "reception_room_0004_out": "reception_room",
-    "bedroom_0081_out": "bedroom",
-    "nyu_office_1_out": "nyu_office",
-    "home_office_0005_out": "home_office",
-    "basement_0001b_out": "basement",
-    "office_0021_out": "office",
-    "living_room_0086b_out": "living_room",
-    "kitchen_0008_out": "kitchen",
-    "living_room_0037_out": "living_room",
-    "kitchen_0035a_out": "kitchen",
-    "study_0003_out": "study",
-    "furniture_store_0001e_out": "furniture_store",
-    "classroom_0018_out": "classroom",
-    "bedroom_0107_out": "bedroom",
-    "laundry_room_0001_out": "laundry_room",
-    "furniture_store_0002d_out": "furniture_store",
-    "dining_room_0010_out": "dining_room",
-    "cafe_0001a_out": "cafe",
-    "office_kitchen_0003_out": "office_kitchen",
-    "bathroom_0005_out": "bathroom",
-    "reception_room_0001a_out": "reception_room",
-    "cafe_0001c_out": "cafe",
-    "classroom_0016_out": "classroom",
-    "foyer_0002_out": "foyer",
-    "classroom_0010_out": "classroom",
-}
+def mapper(path, mapping_dict):
+    if "basement" in path:
+        mapping_dict[path] = "basement"
+    elif "bathroom" in path:
+        mapping_dict[path] = "bathroom"
+    elif "bedroom" in path:
+        mapping_dict[path] = "bedroom"
+    elif "bookstore" in path:
+        mapping_dict[path] = "bookstore"
+    elif "cafe" in path:
+        mapping_dict[path] = "cafe"
+    elif "classroom" in path:
+        mapping_dict[path] = "classroom"
+    elif "conference_room" in path:
+        mapping_dict[path] = "conference_room"
+    elif "dining_room" in path:
+        mapping_dict[path] = "dining_room"
+    elif "furniture_store" in path:
+        mapping_dict[path] = "furniture_store"
+    elif "home_office" in path:
+        mapping_dict[path] = "home_office"
+    elif "home_storage" in path:
+        mapping_dict[path] = "home_storage"
+    elif "kitchen" in path:
+        mapping_dict[path] = "kitchen"
+    elif "living_room" in path:
+        mapping_dict[path] = "living_room"
+    elif "nyu_office" in path:
+        mapping_dict[path] = "nyu_office"
+    elif "office" in path:
+        mapping_dict[path] = "office"
+    elif "office_kitchen" in path:
+        mapping_dict[path] = "office_kitchen"
+    elif "playroom" in path:
+        mapping_dict[path] = "playroom"
+    elif "reception_room" in path:
+        mapping_dict[path] = "reception_room"
+    elif "student_lounge" in path:
+        mapping_dict[path] = "student_lounge"
+    elif "study" in path:
+        mapping_dict[path] = "study"
+    elif "study_room" in path:
+        mapping_dict[path] = "study_room"
+    else:
+        mapping_dict[path] = "misc"
