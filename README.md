@@ -11,3 +11,5 @@
   eid       = arXiv:1812.11941,
   eprint    = 1812.11941
 }
+
+##Also, accompanied with minor changes in the architecture of their model.
