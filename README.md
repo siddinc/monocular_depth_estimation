@@ -12,4 +12,4 @@
   eprint    = 1812.11941
 }
 
-##Also, accompanied with minor changes in the architecture of their model.
+## Also, made some minor changes in their model architecture.
