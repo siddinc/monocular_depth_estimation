@@ -1,66 +1,64 @@
-from tensorflow.keras.layers import Input, concatenate, LeakyReLU, BatchNormalization, Conv2D, MaxPooling2D, Dropout, UpSampling2D
-from tensorflow.keras.models import Model, load_model
-from tensorflow.keras import backend as K
-import tensorflow as tf
+import cv2
+import imutils
+import matplotlib.pyplot as plt
+import numpy as np
+from skimage import img_as_ubyte
+from tensorflow.keras.utils import plot_model
+from tensorflow.keras.models import model_from_json
 
-def downsampling_block(input_tensor, n_filters):
-  x = Conv2D(filters=n_filters, kernel_size=(3,3), padding='same')(input_tensor)
-  x = LeakyReLU(alpha=0.2)(x)
-  x = BatchNormalization()(x)
 
-  x = Conv2D(filters=n_filters, kernel_size=(3,3), padding='same')(x)
-  x = LeakyReLU(alpha=0.2)(x)
-  x = BatchNormalization()(x)
-  return x
+def normalize_image(img):
+    norm_img = (img - img.min()) / (img.max() - img.min())
+    return norm_img
 
-def upsampling_block(input_tensor, n_filters, name, concat_with):
-  x = UpSampling2D((2, 2), interpolation='bilinear', name=name)(input_tensor)
-  x = Conv2D(filters=n_filters, kernel_size=(3, 3), padding='same', name=name+"_convA")(x)
-  x = LeakyReLU(alpha=0.2)(x)
 
-  x = concatenate([x, concat_with], axis=3)
+def preprocess_image(img):
+    image = imutils.resize(img, height=128)
+    image = image[:, 21:149].astype("float")
+    image = normalize_image(image)
+    image = np.reshape(image, (1, 128, 128, 3))
+    return image
 
-  x = Conv2D(filters=n_filters, kernel_size=(3, 3), padding='same', name=name+"_convB")(x)
-  x = LeakyReLU(alpha=0.2)(x)
-  x = BatchNormalization()(x)
+def display_image(img):
+    resized_img = imutils.resize(img, height=256)
+    resized_img = img_as_ubyte(resized_img)
+    img_colorized = cv2.applyColorMap(resized_img, cv2.COLORMAP_HSV)
+    cv2.imshow("depth_map", img_colorized)
 
-  x = Conv2D(filters=n_filters, kernel_size=(3, 3), padding='same', name=name+"_convC")(x)
-  x = LeakyReLU(alpha=0.2)(x)
-  x = BatchNormalization()(x)
-  return x
 
-def build(height, width, depth):
-  # input
-  i = Input(shape=(height, width, depth))
 
-  # encoder
-  conv1 = downsampling_block(i, 32)
-  pool1 = MaxPooling2D(pool_size=(2, 2))(conv1)
-  conv2 = downsampling_block(pool1, 64)
-  pool2 = MaxPooling2D(pool_size=(2, 2))(conv2)
-  conv3 = downsampling_block(pool2, 128)
-  pool3 = MaxPooling2D(pool_size=(2, 2))(conv3)
-  conv4 = downsampling_block(pool3, 256)
-  pool4 = MaxPooling2D(pool_size=(2, 2))(conv4)
+def load_model():
+    with open("./model.json", "r") as f:
+        m = f.read()
+        model = model_from_json(m)
+        model.load_weights("./weights.h5")
+    return model
 
-  # bottleneck
-  conv5 = Conv2D(512, (3, 3), padding='same')(pool4)
-  conv5 = LeakyReLU(alpha=0.2)(conv5)
-  conv5 = Conv2D(512, (3, 3), padding='same')(conv5)
-  conv5 = LeakyReLU(alpha=0.2)(conv5)
 
-  # decoder
-  conv6 = upsampling_block(conv5, 256, "up1", concat_with=conv4)
-  conv7 = upsampling_block(conv6, 128, "up2", concat_with=conv3)
-  conv8 = upsampling_block(conv7, 64, "up3", concat_with=conv2)
-  conv9 = upsampling_block(conv8, 32, "up4", concat_with=conv1)
+def main():
+    loaded_model = load_model()
+    capture = cv2.VideoCapture(0)
 
-  # output
-  o = Conv2D(filters=1, kernel_size=3, strides=(1,1), padding='same', name='conv10')(conv9)
+    while capture.isOpened():
+        try:
+            (check, frame) = capture.read()
+            frame = cv2.flip(frame, 1)
+            cv2.imshow("cam_feed", frame)
+            preprocessed_frame = preprocess_image(frame)
+            pred = loaded_model.predict(preprocessed_frame)
+            pred = np.squeeze(pred)
+            display_image(pred)
 
-  model = Model(inputs=i, outputs=o)
-  return model
+            if (cv2.waitKey(1) & 0xFF) == ord("q"):
+                capture.release()
+                cv2.destroyAllWindows()
+                break
 
-if __name__ == "__main__":
-  model = build(128,128,3)
-  model.summary()
+        except(KeyboardInterrupt):
+            capture.release()
+            cv2.destroyAllWindows()
+            break
+
+
+if __name__ == '__main__':
+    main()
