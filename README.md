@@ -2,9 +2,10 @@
 The goal of this project is to implement the paper on "High Quality Monocular Depth Estimation via Transfer Learning" by Ibraheem Alhashim and Peter Wonka and replace their DenseNet architecture by a UNet with a ResNet encoder.
 
 >  I have trained a Unet Convolutional Neural Network with a Resnet encoder (pre-trained on imagenet weights) on the NYU-Depth v2 dataset which obtained a soft accuracy of 83% on the test set.
-> The output is demonstrated below where the left image represents the predicted depth map, the middle image represents the ground truth depth map and the right image is the ground truth scene. The color map shown in the output is "Plasma" from Matplotlib color maps. Brighter the color, the nearer the object and darker the color, the farther away is the object.
 
-<img src="./images/output.png" width="300" height="300" />
+The output is demonstrated below where the left image represents the predicted depth map, the middle image represents the ground truth depth map and the right image is the ground truth scene. The color map shown in the output is "Plasma" from Matplotlib color maps. Brighter the color, the nearer the object and darker the color, the farther away is the object.
+
+<img src="./images/output.png"/>
 
 ## Tech used:
 - TensorFlow 2.0.0
