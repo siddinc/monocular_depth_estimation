@@ -18,7 +18,7 @@ The output is demonstrated below where the left image represents the predicted d
 - Using `pip`:
   - Run `pip install -r requirements.txt`
 - `cd` to `src`
-- Run `python main.py
+- Run `python main.py`
 
 ## Reference:
 @article{Alhashim2018,
