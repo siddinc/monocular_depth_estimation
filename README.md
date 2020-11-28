@@ -1,7 +1,7 @@
 # Monocular Depth Estimation
-The goal of this project is to implement the paper on "High Quality Monocular Depth Estimation via Transfer Learning" by Ibraheem Alhashim and Peter Wonka and replace their DenseNet architecture by a UNet with a ResNet encoder.
+The goal of this project is to develop a Deep Learning model for Monocular Depth Estimation based on the papers: [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/abs/1505.04597) and [https://arxiv.org/abs/1812.11941](https://arxiv.org/abs/1812.11941).
 
->  I have trained a Unet Convolutional Neural Network with a Resnet encoder (pre-trained on imagenet weights) on the NYU-Depth v2 dataset which obtained a soft accuracy of 83% on the test set.
+> This project implements the UNet Convolutional Neural Network with a ResNet encoder (pre-trained on imagenet weights) on the NYU-Depth v2 dataset and achieved a soft accuracy of 83% on the test set.
 
 The output is demonstrated below where the left image represents the predicted depth map, the middle image represents the ground truth depth map and the right image is the ground truth scene. The color map shown in the output is "Plasma" from Matplotlib color maps. Brighter the color, the nearer the object and darker the color, the farther away is the object.
 
@@ -21,7 +21,7 @@ The output is demonstrated below where the left image represents the predicted d
 - Run `python main.py`
 
 ## Reference:
-@article{Alhashim2018,
+- @article{Alhashim2018,
   author    = Ibraheem Alhashim and Peter Wonka,
   title     = High Quality Monocular Depth Estimation via Transfer Learning,
   journal   = arXiv e-print,
@@ -30,4 +30,12 @@ The output is demonstrated below where the left image represents the predicted d
   url       = https://arxiv.org/abs/1812.11941,
   eid       = arXiv:1812.11941,
   eprint    = 1812.11941
+ }
+
+- @inproceedings{fusenet2016accv,
+ author    = "Olaf Ronneberger, Philipp Fischer, and Thomas Brox",
+ title     = "U-Net: Convolutional Networks for Biomedical Image Segmentation",
+ booktitle = "Medical Image Computing and Computer-Assisted Intervention – MICCAI 2015",
+ year      = "2015",
+ month     = "October",
 }
