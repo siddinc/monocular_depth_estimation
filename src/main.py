@@ -28,10 +28,10 @@ def display_image(img):
 
 
 def load_model():
-    with open("./model.json", "r") as f:
+    with open("../models/model.json", "r") as f:
         m = f.read()
         model = model_from_json(m)
-        model.load_weights("./weights.h5")
+        model.load_weights("../weights.h5")
     return model
 
 
