@@ -1,5 +1,5 @@
 # Monocular Depth Estimation
-The goal of this project is to develop a Deep Learning model for Monocular Depth Estimation based on the papers: [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/abs/1505.04597) and [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/abs/1812.11941).
+The goal of this project is to develop a Deep Learning model for Monocular Depth Estimation based on the papers: [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/abs/1505.04597) and [High Quality Monocular Depth Estimation via Transfer Learning](https://arxiv.org/abs/1812.11941).
 
 > This project implements the UNet Convolutional Neural Network with a ResNet encoder (pre-trained on imagenet weights) on the NYU-Depth v2 dataset and achieved a soft accuracy of 83% on the test set.
 
